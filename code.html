@@ -2,7 +2,7 @@
 <html lang="en" class="h-100">
 
 <head>
-    <title>App Name: A Coding Project by AngelC-dev</title>
+    <title>LoanSmart: A Coding Project by AngelC-dev</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,7 +22,7 @@
 <!-- Nav Section -->
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img src="img/myMark.png" class="d-inline-block align-top" width="30" height="24"> App Name</a>
+        <a class="navbar-brand" href="#"><img src="img/myMark.png" class="d-inline-block align-top" width="30" height="24"> LoanSmart</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
             aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -39,7 +39,7 @@
                     <a class="nav-link active" aria-current="page" href="code.html">The Code</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" target="_blank" href="#">Git Repo</a>
+                    <a class="nav-link" target="_blank" href="https://github.com/AngelC-dev/MTGCALC">Git Repo</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" target="_blank" href="http://www.aacruzsr.com">About</a>
@@ -51,21 +51,148 @@
 <!-- Main Section -->
 <main class="flex-shrink-0">
     <div class="container py-5 px-5 mt-5">
-        <h2 class="border-1 border-bottom border-dark">The Code for APP NAME</h2>
+        <h2 class="border-1 border-bottom border-dark">The Code for LoanSmart</h2>
         <div class="row row-cols-1 row-cols-lg-2">
             <div class="col-lg-8">
                 <pre class="line-numbers"><code class="language-javascript">
-                    //Call Hello World
-                        function helloWorld(){
-                        alert("Hello World")
-                        }
+function calculateLoan() {
+        
+    const loanAmount = parseFloat(document.getElementById("loanAmount").value);
+    
+    const loanTerm = parseInt(document.getElementById("loanTerm").value);
+    
+    const interestRate = parseFloat(document.getElementById("interestRate").value) / 100;
+                      
+    const monthlyRate = interestRate / 12;
+    
+    const monthlyPayment = (loanAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -loanTerm));
+                      
+    document.getElementById("monthlyPayment").textContent = "$" + monthlyPayment.toFixed(2);
+                      
+    let remainingBalance = loanAmount;
+    
+    let totalInterestPaid = 0;
+                      
+    const tableBody = document.getElementById("results");
+    
+    tableBody.innerHTML = "";
+                      
+    for (let month = 1; month <= loanTerm; month++) {
+    
+        const interestPaid = remainingBalance * monthlyRate;
+    
+        const principalPaid = monthlyPayment - interestPaid;
+    
+        const totalInterest = totalInterestPaid + interestPaid;
+    
+        remainingBalance -= principalPaid;
+                      
+        const row = document.createElement("tr");
+    
+        row.innerHTML = `
+    
+        <td>${month}</td>
+    
+        <td>$${monthlyPayment.toFixed(2)}</td>
+    
+        <td>$${principalPaid.toFixed(2)}</td>
+    
+        <td>$${interestPaid.toFixed(2)}</td>
+    
+        <td>$${totalInterest.toFixed(2)}</td>
+    
+        <td>$${remainingBalance.toFixed(2)}</td>
+            `;
+
+            tableBody.appendChild(row);
+
+        }
+                      
+
+        calculateValues(); // Call the calculateValues function to display total values
+
+    }
+
+    // Function to calculate and assign total values
+
+    function calculateValues() {
+
+        // Get the necessary elements
+
+        const totalPrincipalElement = document.getElementById("totalPrincipal");
+
+        const totalInterestElement = document.getElementById("totalInterest");
+
+        const totalCostElement = document.getElementById("totalCost");
+                      
+
+        // Get the input values
+
+        const loanAmount = parseFloat(document.getElementById("loanAmount").value);
+
+        const interestRate = parseFloat(document.getElementById("interestRate").value) / 100;
+
+        const loanTerm = parseInt(document.getElementById("loanTerm").value);
+
+        
+        
+        // Calculate the values
+        
+        const monthlyRate = interestRate / 12;
+        
+        const totalInterest = (loanAmount * monthlyRate * loanTerm).toFixed(2);
+        
+        const totalPrincipal = loanAmount.toFixed(2);
+        
+        const totalCost = (parseFloat(totalPrincipal) + parseFloat(totalInterest)).toFixed(2);
+        
+        
+        
+        // Assign the values to the elements
+        
+        totalPrincipalElement.textContent = totalPrincipal;
+        
+        totalInterestElement.textContent = totalInterest;
+        
+        totalCostElement.textContent = totalCost;
+        
+    }
+                      
                 </code>
                 </pre> 
             </div>
             <div class="col-lg-4">
-                <p1>The Code is structed in one function.</p1>
-                <h5>Hello World</h5>
-                <p>Hello world is a function that displays the message "Hello World".</p>
+                <p1>Here's a summary explanation of the code:</p1>
+                <h5>calculateLoan()</h5>
+                <p>The function is triggered when the user clicks the "Calculate" button. It retrieves the loan amount, loan term, and interest rate entered by the user from the input fields on the webpage. It calculates the monthly interest rate by dividing the interest rate by 12.
+
+                    The monthly payment is calculated using the formula (loanAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -loanTerm)).
+                    
+                    The calculated monthly payment is displayed on the webpage by updating the content of the element with the ID "monthlyPayment".
+                    
+                    The function initializes variables for the remaining balance and total interest paid.
+                    
+                    The for loop iterates from month 1 to the loan term and calculates the interest paid, principal paid, total interest, and remaining balance for each month. It dynamically creates table rows with this data and appends them to the "results" table on the webpage.
+                    
+                    The function is called at the end of calculateLoan() to calculate and assign the total principal, total interest, and total cost.
+                    </p>
+                <h5>The calculateValues()</h5>
+                <p>The function is called at the end of calculateLoan() to calculate and assign the total principal, total interest, and total cost. In the calculateValues() function, the necessary HTML elements for displaying the total values are retrieved.
+
+                    The input values for loan amount, interest rate, and loan term are retrieved again.
+                    
+                    The monthly interest rate is calculated.
+                    
+                    The total interest is calculated using the formula (loanAmount * monthlyRate * loanTerm).toFixed(2).
+                    
+                    The total principal is assigned the loan amount with two decimal places.
+                    
+                    The total cost is calculated by adding the total principal and total interest, and both values are displayed with two decimal places.
+                    
+                    The calculated total principal, total interest, and total cost are assigned to their respective HTML elements.
+                    </p>
+                <h5>In summary, the code calculates the monthly payment, generates an amortization schedule, and displays the total principal, total interest, and total cost on the webpage based on the user's input.</h5>
+                
             </div>
         </div>
     </div>
